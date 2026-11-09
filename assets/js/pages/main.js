@@ -9,10 +9,11 @@ $(function () {
     const $bg = $section.find('.bg').first();
     if (!$section.length || !$container.length || !$bg.length || typeof window.Swiper !== 'function') return;
 
+    const resolveAssetUrl = (assetPath) => new URL(assetPath, window.location.href).toString();
     const defaultSlides = [
-        { bg: '/assets/img/main/bg01.jpg', lines: ['Import & Export 전문기업', '도일상사주식회사'], product: '/assets/img/main/product01.png' },
-        { bg: '/assets/img/main/bg02.jpg', lines: ['니시시바 전기· 테라사키 전기', '한국 공식 대리점'], product: '/assets/img/main/product02.png' },
-        { bg: '/assets/img/main/bg03.jpg', lines: ['해양 무역산업의 미래를 잇는', '도일상사주식회사'], product: '/assets/img/main/product03.png' }
+        { bg: resolveAssetUrl('../../assets/img/main/bg01.jpg'), lines: ['Import & Export 전문기업', '도일상사주식회사'], product: resolveAssetUrl('../../assets/img/main/product01.png') },
+        { bg: resolveAssetUrl('../../assets/img/main/bg02.jpg'), lines: ['니시시바 전기· 테라사키 전기', '한국 공식 대리점'], product: resolveAssetUrl('../../assets/img/main/product02.png') },
+        { bg: resolveAssetUrl('../../assets/img/main/bg03.jpg'), lines: ['해양 무역산업의 미래를 잇는', '도일상사주식회사'], product: resolveAssetUrl('../../assets/img/main/product03.png') }
     ];
     const data = Array.isArray(window.MAIN_HERO_SLIDES) && window.MAIN_HERO_SLIDES.length
         ? window.MAIN_HERO_SLIDES

@@ -97,10 +97,54 @@ async function ensureGsapCssPlugin() {
 }
 
 /* ===== Components loader ===== */
+function getComponentBasePath() {
+    const pagePath = window.location.pathname.replace(/\/index\.html?$/, '/');
+
+    if (pagePath.includes('/en/pages/')) return '../../components';
+    if (pagePath.includes('/kr/pages/')) return '../../components';
+    if (pagePath.includes('/en/')) return '../components';
+    if (pagePath.includes('/kr/')) return '../components';
+
+    return 'components';
+}
+
+function normalizeSitePathValue(value) {
+    if (!value || typeof value !== 'string') return value;
+    if (/^(https?:|mailto:|tel:|#|javascript:|data:)/i.test(value)) return value;
+    if (!value.startsWith('/')) return value;
+
+    const repoBase = window.location.pathname.split('/').filter(Boolean)[0] === 'doilco' ? '/doilco' : '';
+    const targetPath = new URL(`${repoBase}${value}`, window.location.origin).pathname;
+    const currentDir = new URL('.', window.location.href).pathname;
+    const fromParts = currentDir.split('/').filter(Boolean);
+    const toParts = targetPath.split('/').filter(Boolean);
+
+    let index = 0;
+    while (index < fromParts.length && index < toParts.length && fromParts[index] === toParts[index]) {
+        index += 1;
+    }
+
+    const up = '../'.repeat(Math.max(0, fromParts.length - index));
+    const down = toParts.slice(index).join('/');
+    const relative = `${up}${down}`.replace(/\/\/$/, '');
+    return relative || '.';
+}
+
+function normalizeInjectedSiteUrls($container) {
+    $container.find('a[href^="/"], img[src^="/"], source[src^="/"]').each(function () {
+        const $el = $(this);
+        const attr = this.tagName === 'IMG' || this.tagName === 'SOURCE' ? 'src' : 'href';
+        const value = $el.attr(attr);
+        if (!value) return;
+
+        const normalized = normalizeSitePathValue(value);
+        if (normalized !== value) $el.attr(attr, normalized);
+    });
+}
+
 async function loadComponents() {
     try {
-        const isEN = location.pathname.startsWith('/en/');
-        const compBase = isEN ? '/en/components' : '/components';
+        const compBase = getComponentBasePath();
 
         const hasSubtop = !!$('#subtop-container').length;
         const hasCta = !!$('#cta-container').length;
@@ -112,11 +156,24 @@ async function loadComponents() {
             hasCta ? fetch(`${compBase}/cta.html`) : Promise.resolve({ text: async () => '' })
         ]);
 
-        $('#header-container').html(await headerRes.text());
-        $('#footer-container').html(await footerRes.text());
+        const $header = $('#header-container');
+        const $footer = $('#footer-container');
+        $header.html(await headerRes.text());
+        $footer.html(await footerRes.text());
 
-        if (hasSubtop) $('#subtop-container').html(await subtopRes.text());
-        if (hasCta) $('#cta-container').html(await ctaRes.text());
+        normalizeInjectedSiteUrls($header);
+        normalizeInjectedSiteUrls($footer);
+
+        if (hasSubtop) {
+            const $subtop = $('#subtop-container');
+            $subtop.html(await subtopRes.text());
+            normalizeInjectedSiteUrls($subtop);
+        }
+        if (hasCta) {
+            const $cta = $('#cta-container');
+            $cta.html(await ctaRes.text());
+            normalizeInjectedSiteUrls($cta);
+        }
         setHeaderActive();
 
         $(document).trigger('components:ready');
