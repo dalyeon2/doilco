@@ -100,12 +100,21 @@ async function ensureGsapCssPlugin() {
 function getComponentBasePath() {
     const pagePath = window.location.pathname.replace(/\/index\.html?$/, '/');
 
-    if (pagePath.includes('/en/pages/')) return '../../components';
+    if (pagePath.includes('/en/pages/')) return '../components';
     if (pagePath.includes('/kr/pages/')) return '../../components';
-    if (pagePath.includes('/en/')) return '../components';
+    if (pagePath.includes('/en/')) return 'components';
     if (pagePath.includes('/kr/')) return '../components';
 
     return 'components';
+}
+
+function getSiteRootPath() {
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    const repoIndex = parts.lastIndexOf('doilco');
+    if (repoIndex >= 0) {
+        return '/' + parts.slice(0, repoIndex + 1).join('/');
+    }
+    return '';
 }
 
 function normalizeSitePathValue(value) {
@@ -113,10 +122,10 @@ function normalizeSitePathValue(value) {
     if (/^(https?:|mailto:|tel:|#|javascript:|data:)/i.test(value)) return value;
     if (!value.startsWith('/')) return value;
 
-    const repoBase = window.location.pathname.split('/').filter(Boolean)[0] === 'doilco' ? '/doilco' : '';
-    const targetPath = new URL(`${repoBase}${value}`, window.location.origin).pathname;
-    const currentDir = new URL('.', window.location.href).pathname;
-    const fromParts = currentDir.split('/').filter(Boolean);
+    const siteRoot = getSiteRootPath();
+    const currentPath = window.location.pathname.replace(/\/index\.html?$/, '/');
+    const targetPath = `${siteRoot || ''}${value}`;
+    const fromParts = currentPath.split('/').filter(Boolean);
     const toParts = targetPath.split('/').filter(Boolean);
 
     let index = 0;
@@ -140,6 +149,20 @@ function normalizeInjectedSiteUrls($container) {
         const normalized = normalizeSitePathValue(value);
         if (normalized !== value) $el.attr(attr, normalized);
     });
+}
+
+function normalizeLogoPaths() {
+    const currentPath = (window.location.pathname || '').replace(/\\/g, '/');
+    const isMainPage = /\/(kr|en)\/?$/i.test(currentPath) || /\/(kr|en)\/index\.html?$/i.test(currentPath);
+    const logoPath = isMainPage ? '../assets/img/common/logo.png' : '../../assets/img/common/logo.png';
+    const footerLogoPath = isMainPage ? '../assets/img/common/logo-white.png' : '../../assets/img/common/logo-white.png';
+
+    $('#header-container .logo img').attr('src', logoPath);
+    $('#footer-container .logo img').attr('src', footerLogoPath);
+
+    const currentUrl = new URL(window.location.href);
+    const homeHref = new URL(/\/(kr|en)\/pages\//i.test(currentPath) ? '../index.html' : 'index.html', currentUrl.href).href;
+    $('#header-container .logo, #footer-container .logo').attr('href', homeHref);
 }
 
 async function loadComponents() {
@@ -174,6 +197,8 @@ async function loadComponents() {
             $cta.html(await ctaRes.text());
             normalizeInjectedSiteUrls($cta);
         }
+
+        normalizeLogoPaths();
         setHeaderActive();
 
         $(document).trigger('components:ready');
@@ -654,33 +679,51 @@ function initHeaderLnb() {
 
 /* ===== Language switch ===== */
 function initLanguageSwitchLinks() {
-    const path = window.location.pathname || '';
-    const isKr = path.startsWith('/kr/');
-    const isEn = path.startsWith('/en/');
-    if (!isKr && !isEn) return;
+    const currentPath = (window.location.pathname || '').replace(/\\/g, '/');
+    const langMatch = currentPath.match(/(?:^|\/)(en|kr)(?=\/|$)/i);
+    if (!langMatch) return;
 
-    const sourceLang = isKr ? 'kr' : 'en';
-    const targetLang = isKr ? 'en' : 'kr';
+    const sourceLang = (langMatch[1] || 'kr').toLowerCase();
+    const targetLang = sourceLang === 'kr' ? 'en' : 'kr';
 
-    const toTargetPath = (() => {
-        if (path.includes('/pages/support-detail.html')) {
-            return `/${targetLang}/pages/support-news.html`;
+    const getLanguagePageUrl = (lang, pagePath = currentPath) => {
+        const segments = pagePath.split('/').filter(Boolean);
+        const langIndex = segments.findIndex((segment) => /^(en|kr)$/i.test(segment));
+        const nextSegments = [...segments];
+
+        if (langIndex >= 0) {
+            nextSegments[langIndex] = lang;
+        } else {
+            nextSegments.unshift(lang);
         }
 
-        if (sourceLang === 'kr') {
-            return path.replace(/^\/kr\//, '/en/');
-        }
-        return path.replace(/^\/en\//, '/kr/');
-    })();
+        return new URL('/' + nextSegments.join('/'), window.location.href).href;
+    };
 
     const $links = $('header.header .lang a.item');
     if (!$links.length) return;
 
+    const $activeLink = sourceLang === 'kr'
+        ? $links.filter(function () {
+            return ($(this).text() || '').trim().toUpperCase() === 'KOR';
+        })
+        : $links.filter(function () {
+            return ($(this).text() || '').trim().toUpperCase() === 'ENG';
+        });
+
+    $links.removeClass('active').removeAttr('aria-current');
+    $activeLink.addClass('active').attr('aria-current', 'page');
+
     $links.each(function () {
         const $link = $(this);
         const text = ($link.text() || '').trim().toUpperCase();
-        if ((targetLang === 'en' && text === 'ENG') || (targetLang === 'kr' && text === 'KOR')) {
-            $link.attr('href', toTargetPath);
+        const targetUrl = getLanguagePageUrl(targetLang);
+
+        if (text === 'KOR') {
+            $link.attr('href', targetLang === 'kr' ? targetUrl : getLanguagePageUrl('kr'));
+        }
+        if (text === 'ENG') {
+            $link.attr('href', targetLang === 'en' ? targetUrl : getLanguagePageUrl('en'));
         }
     });
 }
