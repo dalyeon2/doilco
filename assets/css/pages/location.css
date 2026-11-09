@@ -1,0 +1,261 @@
+/* 
+---------------------------------------------
+                Location
+--------------------------------------------- 
+*/
+
+/* cont1 */
+.cont1 .container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 30px;
+}
+
+.cont1 .left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 120px;
+}
+
+.cont1 .title {
+    color: var(--black);
+    font-weight: 700;
+    white-space: pre-line;
+    word-break: keep-all;
+}
+
+.cont1 .cards {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cont1 .card {
+    width: 100%;
+    padding: 30px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--black-50);
+    border-radius: 20px;
+}
+
+.cont1 .icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+    flex-shrink: 0;
+}
+
+.cont1 .icon.pin {
+    background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M26.6668 13.3337C26.6668 19.991 19.2815 26.9243 16.8015 29.0657C16.5705 29.2394 16.2892 29.3333 16.0002 29.3333C15.7111 29.3333 15.4299 29.2394 15.1988 29.0657C12.7188 26.9243 5.3335 19.991 5.3335 13.3337C5.3335 10.5047 6.4573 7.79157 8.45769 5.79119C10.4581 3.7908 13.1712 2.66699 16.0002 2.66699C18.8291 2.66699 21.5422 3.7908 23.5426 5.79119C25.543 7.79157 26.6668 10.5047 26.6668 13.3337Z' stroke='%230C3FAD' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M16 17.333C18.2091 17.333 20 15.5421 20 13.333C20 11.1239 18.2091 9.33301 16 9.33301C13.7909 9.33301 12 11.1239 12 13.333C12 15.5421 13.7909 17.333 16 17.333Z' stroke='%230C3FAD' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.cont1 .icon.call {
+    background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M29.3334 22.5605V26.5605C29.3349 26.9318 29.2589 27.2993 29.1101 27.6396C28.9613 27.9798 28.7431 28.2852 28.4695 28.5363C28.1959 28.7873 27.8728 28.9784 27.5211 29.0974C27.1693 29.2164 26.7966 29.2605 26.4267 29.2271C22.3239 28.7813 18.3827 27.3793 14.9201 25.1338C11.6985 23.0867 8.96719 20.3554 6.92007 17.1338C4.66671 13.6554 3.2644 9.69511 2.82674 5.57379C2.79342 5.20508 2.83724 4.83347 2.95541 4.48262C3.07357 4.13177 3.2635 3.80937 3.51309 3.53595C3.76269 3.26253 4.06648 3.04407 4.40513 2.89448C4.74378 2.7449 5.10986 2.66747 5.48007 2.66712H9.48007C10.1271 2.66075 10.7545 2.88989 11.2451 3.31183C11.7357 3.73377 12.0562 4.31972 12.1467 4.96045C12.3156 6.24054 12.6287 7.49742 13.0801 8.70712C13.2595 9.18435 13.2983 9.70301 13.1919 10.2016C13.0856 10.7002 12.8386 11.1579 12.4801 11.5205L10.7867 13.2138C12.6848 16.5518 15.4487 19.3157 18.7867 21.2138L20.4801 19.5205C20.8426 19.162 21.3003 18.9149 21.7989 18.8086C22.2975 18.7022 22.8162 18.7411 23.2934 18.9205C24.5031 19.3719 25.76 19.685 27.0401 19.8538C27.6878 19.9452 28.2793 20.2714 28.7021 20.7704C29.125 21.2695 29.3496 21.9066 29.3334 22.5605Z' stroke='%230C3FAD' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.cont1 .text {
+    color: var(--black-900);
+    font-weight: 600;
+    white-space: pre-line;
+    word-break: keep-all;
+}
+
+.cont1 .card a {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 8px;
+    padding: 2px 8px;
+    margin: -2px -8px;
+    background: transparent;
+    text-decoration: none;
+    transition: background-color .35s ease, color .35s ease;
+}
+
+.cont1 .card a:hover,
+.cont1 .card a:focus-visible {
+    color: var(--primary);
+    background: var(--bg);
+    text-decoration: none;
+}
+
+.cont1 .right {
+    position: relative;
+    flex: 1.4;
+    width: 880px;
+    height: 744px;
+    border-radius: 20px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.cont1 .right iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    pointer-events: none;
+}
+
+.cont1 .right.on iframe {
+    pointer-events: auto;
+}
+
+@media (max-width: 1440px) {
+    .cont1 .container {
+        gap: 26px;
+    }
+
+    .cont1 .left {
+        width: min(560px, 100%);
+        gap: 90px;
+    }
+
+    .cont1 .cards {
+        gap: 16px;
+    }
+
+    .cont1 .card {
+        padding: 26px 22px;
+    }
+
+    .cont1 .right {
+        width: min(760px, 100%);
+        height: 620px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .cont1 .container {
+        align-items: stretch;
+        gap: 22px;
+    }
+
+    .cont1 .left {
+        width: min(500px, 100%);
+        gap: 70px;
+    }
+
+    .cont1 .cards {
+        gap: 14px;
+    }
+
+    .cont1 .card {
+        padding: 24px 20px;
+    }
+
+    .cont1 .icon {
+        width: 44px;
+        height: 44px;
+        background-size: 30px 30px;
+    }
+
+    .cont1 .right {
+        width: min(680px, 100%);
+        height: 560px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .cont1 .container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+
+    .cont1 .left,
+    .cont1 .right {
+        width: 100%;
+    }
+
+    .cont1 .left {
+        gap: 40px;
+    }
+
+    .cont1 .cards {
+        gap: 12px;
+    }
+
+    .cont1 .card {
+        padding: 22px 18px;
+    }
+
+    .cont1 .right {
+        height: clamp(620px, 72vh, 820px);
+        min-height: 620px;
+    }
+
+    .cont1 .right iframe {
+        height: clamp(580px, 68vh, 760px);
+        min-height: 580px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cont1 .container {
+        gap: 20px;
+    }
+
+    .cont1 .left {
+        gap: 32px;
+    }
+
+    .cont1 .card {
+        padding: 22px 18px;
+        border-radius: 16px;
+    }
+
+    .cont1 .icon {
+        width: 40px;
+        height: 40px;
+        background-size: 26px 26px;
+    }
+
+    .cont1 .right {
+        height: clamp(560px, 68vh, 760px);
+        min-height: 560px;
+        border-radius: 16px;
+    }
+
+    .cont1 .right iframe {
+        height: clamp(520px, 64vh, 700px);
+        min-height: 520px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cont1 .left {
+        gap: 24px;
+    }
+
+    .cont1 .card {
+        padding: 18px 14px;
+        border-radius: 14px;
+    }
+
+    .cont1 .icon {
+        width: 36px;
+        height: 36px;
+        background-size: 22px 22px;
+    }
+
+    .cont1 .right {
+        height: clamp(500px, 62vh, 680px);
+        min-height: 500px;
+        border-radius: 14px;
+    }
+
+    .cont1 .right iframe {
+        height: clamp(460px, 58vh, 620px);
+        min-height: 460px;
+    }
+}

@@ -1,0 +1,191 @@
+/* 
+---------------------------------------------
+               Common Button
+--------------------------------------------- 
+*/
+.btn {
+    --btn-radius: 12px;
+    position: relative;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: var(--btn-radius);
+    background: var(--white);
+    color: var(--black-800);
+    font-size: var(--font-base);
+    font-weight: 500;
+    line-height: 1.6;
+    text-decoration: none;
+    display: inline-flex;
+    width: fit-content;
+    max-width: 100%;
+    min-height: 40px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    isolation: isolate;
+    transition: color 0.35s ease, transform 0.3s ease;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: calc(var(--btn-radius) + 2px);
+    background: #2F5FBF;
+    clip-path: inset(0 0 100% 0);
+    animation: btnBgOut 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    will-change: clip-path;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    z-index: 0;
+}
+
+.btn::after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    display: block;
+    background: currentColor;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3E%3Cpath%20d='M13%208L8%204M13%208L8%2012M13%208H3'%20stroke='%23252B37'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+    mask: url("data:image/svg+xml,%3Csvg%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3E%3Cpath%20d='M13%208L8%204M13%208L8%2012M13%208H3'%20stroke='%23252B37'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+    transform: translateX(0);
+    transition: transform 0.25s ease;
+    z-index: 2;
+}
+
+.btn .label {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    line-height: 1.6;
+    min-width: max-content;
+    white-space: nowrap;
+    z-index: 2;
+}
+
+.btn .label > span {
+    display: block;
+    position: relative;
+    line-height: inherit;
+    white-space: nowrap;
+}
+
+.btn:hover,
+.btn:focus-visible {
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+    animation: btnBgIn 2.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.btn:hover::after,
+.btn:focus-visible::after {
+    transform: translateX(2px);
+}
+
+.btn:hover .label > span,
+.btn:focus-visible .label > span {
+    animation: btnLabelUp 0.24s forwards, btnLabelDown 0.24s forwards 0.2s;
+}
+
+@media (max-width: 1024px) {
+    .btn {
+        --btn-radius: 11px;
+        padding: 8px 13px;
+        font-size: 15px;
+        min-height: 38px;
+        gap: 7px;
+    }
+
+    .btn::after {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .btn {
+        --btn-radius: 10px;
+        padding: 7px 12px;
+        font-size: var(--font-sm);
+        min-height: 36px;
+        gap: 6px;
+        line-height: 1.55;
+    }
+
+    .btn::after {
+        width: 14px;
+        height: 14px;
+    }
+
+    .btn .label {
+        line-height: 1.55;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn {
+        --btn-radius: 9px;
+        padding: 6px 10px;
+        font-size: var(--font-sm);
+        min-height: 34px;
+        gap: 5px;
+        line-height: 1.5;
+    }
+
+    .btn::after {
+        width: 13px;
+        height: 13px;
+    }
+
+    .btn .label {
+        line-height: 1.5;
+    }
+}
+
+@keyframes btnLabelUp {
+    to {
+        transform: translate3d(0, -105%, 0) scale3d(1, 2, 1);
+        opacity: 0;
+    }
+}
+
+@keyframes btnBgIn {
+    from {
+        clip-path: circle(0% at 50% 100%);
+    }
+    to {
+        clip-path: circle(172% at 50% 100%);
+    }
+}
+
+@keyframes btnBgOut {
+    from {
+        clip-path: inset(0 0 0 0);
+    }
+    to {
+        clip-path: inset(0 0 100% 0);
+    }
+}
+
+@keyframes btnLabelDown {
+    from {
+        transform: translate3d(0, 105%, 0) scale3d(1, 2, 1);
+        opacity: 0;
+    }
+    to {
+        transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+        opacity: 1;
+    }
+}

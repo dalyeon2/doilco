@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <script src="../../assets/js/github-pages-paths.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="../../assets/icons/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../../assets/css/common.css">
+    <link rel="stylesheet" href="../../assets/css/pages/library.css">
+    <title>자료실 | DOIL CORPORATION</title>
+</head>
+
+<body>
+    <div id="header-container"></div>
+
+    <!-- s: subtop -->
+    <section class="subtop">
+        <div class="container">
+            <div class="head">
+                <div class="crumb" aria-label="breadcrumb">
+                    <span class="home" aria-hidden="true"></span>
+                    <span class="caption1">고객지원</span>
+                    <strong class="caption1">자료실</strong>
+                </div>
+                <h1 class="title point1">자료실</h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- s: section 1 -->
+    <section class="cont1">
+        <div class="container end-spacer">
+            <div class="head">
+                <div class="tabs" role="tablist" aria-label="자료 유형">
+                    <button type="button" class="tab is-active" role="tab" aria-selected="true">전체</button>
+                    <button type="button" class="tab" role="tab" aria-selected="false">제품 카다로그</button>
+                    <button type="button" class="tab" role="tab" aria-selected="false">회사소개서</button>
+                    <button type="button" class="tab" role="tab" aria-selected="false">기타 자료</button>
+                </div>
+
+                <div class="search" role="search" aria-label="자료실 검색">
+                    <input type="text" class="input body5" placeholder="검색어를 입력해주세요." aria-label="검색어 입력">
+                    <button type="button" class="submit" aria-label="검색"></button>
+                </div>
+            </div>
+
+            <div class="board reveal-up">
+                <table class="table">
+                    <caption class="sr-only">자료실 목록</caption>
+                    <colgroup>
+                        <col class="col-no">
+                        <col class="col-subject">
+                        <col class="col-download">
+                    </colgroup>
+                    <thead class="sr-only">
+                        <tr>
+                            <th scope="col">번호</th>
+                            <th scope="col">제목</th>
+                            <th scope="col">다운로드</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="no body3">07</td>
+                            <td class="subject body3">니시시바 전기(Nishishiha Electric Co., Ltd) 회사소개서(JPN)</td>
+                            <td class="file"><a href="#" class="download body5" download><span>다운로드</span><span class="icon" aria-hidden="true"></span></a></td>
+                        </tr>
+                        <tr>
+                            <td class="no body3">06</td>
+                            <td class="subject body3">Shaft Generator 카다로그</td>
+                            <td class="file"><a href="#" class="download body5" download><span>다운로드</span><span class="icon" aria-hidden="true"></span></a></td>
+                        </tr>
+                        <tr>
+                            <td class="no body3">05</td>
+                            <td class="subject body3">Air circuit breakers for DC special voltage 카다로그</td>
+                            <td class="file"><a href="#" class="download body5" download><span>다운로드</span><span class="icon" aria-hidden="true"></span></a></td>
+                        </tr>
+                        <tr>
+                            <td class="no body3">04</td>
+                            <td class="subject body3">Moulded case circuit breakers TemBreak PRO 카다로그</td>
+                            <td class="file"><a href="#" class="download body5" download><span>다운로드</span><span class="icon" aria-hidden="true"></span></a></td>
+                        </tr>
+                        <tr>
+                            <td class="no body3">03</td>
+                            <td class="subject body3">TemPower2 Air circuit breakers / Economical Air circuit breakers 카다로그</td>
+                            <td class="file"><a href="#" class="download body5" download><span>다운로드</span><span class="icon" aria-hidden="true"></span></a></td>
+                        </tr>
+                        <tr>
+                            <td class="no body3">02</td>
+                            <td class="subject body3">2026년 도일상사주식회사 회사소개서(KOR)</td>
+                            <td class="file"><a href="#" class="download body5" download><span>다운로드</span><span class="icon" aria-hidden="true"></span></a></td>
+                        </tr>
+                        <tr>
+                            <td class="no body3">01</td>
+                            <td class="subject body3">2026년 도일상사주식회사 회사소개서(ENG)</td>
+                            <td class="file"><a href="#" class="download body5" download><span>다운로드</span><span class="icon" aria-hidden="true"></span></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pager" role="navigation">
+                <button type="button" class="arrow prev" aria-label="이전 페이지" disabled></button>
+                <button type="button" class="page is-active" aria-current="page">1</button>
+                <button type="button" class="page">2</button>
+                <button type="button" class="page">3</button>
+                <button type="button" class="page">4</button>
+                <button type="button" class="page">5</button>
+                <button type="button" class="arrow next" aria-label="다음 페이지"></button>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-container"></div>
+    <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to Top"></button>
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- gsap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- ScrollTo Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    
+    <script src="../../assets/js/common.js"></script>
+    <script src="../../assets/js/pages/library.js"></script>
+</body>
+
+</html>

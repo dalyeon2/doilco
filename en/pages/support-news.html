@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="/assets/icons/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <link rel="stylesheet" href="/assets/css/pages/news.css">
+    <title>News | DOIL CORPORATION</title>
+</head>
+
+<body>
+    <div id="header-container"></div>
+
+    <!-- s: subtop -->
+    <section class="subtop">
+        <div class="container">
+            <div class="head">
+                <div class="crumb" aria-label="breadcrumb">
+                    <span class="home" aria-hidden="true"></span>
+                    <span class="caption1">Support</span>
+                    <strong class="caption1">News</strong>
+                </div>
+                <h1 class="title point1">News</h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- s: section 1 -->
+    <section class="cont1">
+        <div class="container end-spacer">
+            <div class="head">
+                <p class="count body4">Total <strong>02</strong> items</p>
+
+                <div class="search" role="search" aria-label="News Search">
+                    <input type="text" class="input body5" placeholder="Enter a keyword." aria-label="Enter keyword">
+                    <button type="button" class="submit" aria-label="Search"></button>
+                </div>
+            </div>
+
+            <div class="board reveal-up">
+                <table class="table">
+                    <caption class="sr-only">News List</caption>
+                    <colgroup>
+                        <col class="col-no">
+                        <col class="col-subject">
+                        <col class="col-date">
+                    </colgroup>
+                    <thead class="sr-only">
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="no body3">02</td>
+                            <td class="subject body3"><a href="/en/pages/support-detail.html">DOIL CORPORATION website has been renewed.</a></td>
+                            <td class="date body4"><time datetime="2026-02-24">2026.02.24</time></td>
+                        </tr>
+                        <tr>
+                            <td class="no body3">01</td>
+                            <td class="subject body3"><a href="#">Sales started: TOGAMI DC SWITCH for solar combiner boxes (Japan)</a></td>
+                            <td class="date body4"><time datetime="2026-02-24">2026.02.24</time></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pager" role="navigation">
+                <button type="button" class="arrow prev" aria-label="Previous Page" disabled></button>
+                <button type="button" class="page is-active" aria-current="page">1</button>
+                <button type="button" class="page">2</button>
+                <button type="button" class="page">3</button>
+                <button type="button" class="page">4</button>
+                <button type="button" class="page">5</button>
+                <button type="button" class="arrow next" aria-label="Next Page"></button>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-container"></div>
+    <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to Top"></button>
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- gsap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- ScrollTo Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    
+    <script src="/assets/js/common.js"></script>
+    <script src="/assets/js/pages/news.js"></script>
+</body>
+
+</html>

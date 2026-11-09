@@ -1,0 +1,213 @@
+/*
+---------------------------------------------
+               Company Greeting
+---------------------------------------------
+*/
+
+/* cont1 */
+.cont1 .container {
+    position: relative;
+    padding-top: 150px;
+    display: flex;
+    justify-content: space-between;
+    overflow: visible;
+}
+
+.cont1 .copy {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 95px;
+    z-index: 2;
+}
+
+.cont1 .title {
+    color: var(--primary);
+    font-weight: 700;
+    word-break: keep-all;
+    white-space: pre-line;
+}
+
+.cont1 .body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.cont1 .text {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.cont1 .text p {
+    word-break: keep-all;
+    white-space: pre-line;
+}
+
+.cont1 .role {
+    margin-top: 64px;
+}
+
+.cont1 .sign {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+}
+
+.cont1 .namecn {
+    font-weight: 600;
+}
+
+.cont1 .name {
+    color: var(--black-500);
+}
+
+.cont1 .visual {
+    position: absolute;
+    right: -290px;
+    top: 0;
+    width: 1052px;
+    height: 740px;
+}
+
+.cont1 .visual img {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+@media (max-width: 1440px) {
+    .cont1 .container {
+        padding-top: 90px;
+        min-height: 680px;
+    }
+
+    .cont1 .visual {
+        right: -180px;
+        width: min(62vw, 920px);
+        height: 680px;
+        z-index: 1;
+    }
+
+    .cont1 .copy {
+        width: min(600px, 100%);
+        padding-top: 120px;
+        gap: 72px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .cont1 .container {
+        min-height: 620px;
+    }
+
+    .cont1 .visual {
+        right: -96px;
+        width: min(58vw, 760px);
+        height: 620px;
+        z-index: 1;
+    }
+
+    .cont1 .copy {
+        width: min(560px, 100%);
+        padding-top: 100px;
+        gap: 56px;
+    }
+
+    .cont1 .body {
+        gap: 48px;
+    }
+
+    .cont1 .role {
+        margin-top: 52px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .cont1 .container {
+        min-height: auto;
+        padding-top: 70px;
+        padding-bottom: 120px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .cont1 .visual {
+        position: relative;
+        width: 100%;
+        height: 360px;
+        order: 2;
+        right: auto;
+        top: auto;
+        z-index: 1;
+        overflow: hidden;
+        border-radius: 16px;
+    }
+
+    .cont1 .visual img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .cont1 .copy {
+        width: 100%;
+        padding-top: 0;
+        gap: 42px;
+    }
+
+    .cont1 .body {
+        gap: 32px;
+    }
+
+    .cont1 .role {
+        margin-top: 42px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cont1 .visual {
+        height: 300px;
+        border-radius: 14px;
+    }
+
+    .cont1 .title {
+        line-height: 1.45;
+    }
+
+    .cont1 .role {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cont1 .container {
+        padding-top: 40px;
+        padding-bottom: 80px;
+        gap: 28px;
+    }
+
+    .cont1 .visual {
+        height: 240px;
+        border-radius: 14px;
+    }
+
+    .cont1 .copy {
+        gap: 28px;
+    }
+
+    .cont1 .body {
+        gap: 22px;
+    }
+
+    .cont1 .role {
+        margin-top: 22px;
+    }
+}
