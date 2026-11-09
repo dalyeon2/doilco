@@ -117,30 +117,66 @@ function getSiteRootPath() {
     return '';
 }
 
-function normalizeSitePathValue(value) {
-    if (!value || typeof value !== 'string') return value;
-    if (/^(https?:|mailto:|tel:|#|javascript:|data:)/i.test(value)) return value;
-    if (!value.startsWith('/')) return value;
-
-    const siteRoot = getSiteRootPath();
-    const currentPath = window.location.pathname.replace(/\/index\.html?$/, '/');
-    const targetPath = `${siteRoot || ''}${value}`;
-    const fromParts = currentPath.split('/').filter(Boolean);
-    const toParts = targetPath.split('/').filter(Boolean);
+function buildRelativePath(fromPath, toPath) {
+    const fromParts = fromPath.split('/').filter(Boolean);
+    const toParts = toPath.split('/').filter(Boolean);
 
     let index = 0;
     while (index < fromParts.length && index < toParts.length && fromParts[index] === toParts[index]) {
         index += 1;
     }
 
-    const up = '../'.repeat(Math.max(0, fromParts.length - index));
+    const up = '../'.repeat(Math.max(0, fromParts.length - index - 1));
     const down = toParts.slice(index).join('/');
-    const relative = `${up}${down}`.replace(/\/\/$/, '');
-    return relative || '.';
+    const relative = `${up}${down}`.replace(/\/+/g, '/');
+    return relative || './';
+}
+
+function normalizeSitePathValue(value) {
+    if (!value || typeof value !== 'string') return value;
+    const trimmed = value.trim().replace(/\\/g, '/');
+    if (!trimmed || /^(https?:|mailto:|tel:|#|javascript:|data:)/i.test(trimmed)) return trimmed;
+
+    const currentPath = (window.location.pathname || '').replace(/\\/g, '/');
+    const siteRoot = getSiteRootPath();
+    const normalizeToSitePath = (raw) => {
+        const cleaned = raw.replace(/^(?:\.\/)+/, '').replace(/^(?:\.\.\/)+/, '');
+        const withoutLeadingSlash = cleaned.replace(/^\/+/, '');
+        return `${siteRoot || ''}/${withoutLeadingSlash}`;
+    };
+
+    if (trimmed.startsWith('/')) {
+        const targetPath = `${siteRoot || ''}${trimmed}`;
+        return buildRelativePath(currentPath, targetPath);
+    }
+
+    if ((trimmed.includes('/kr/') || trimmed.includes('/en/')) && /^(?:\.\.?\/)+/.test(trimmed)) {
+        const targetPath = normalizeToSitePath(trimmed);
+        return buildRelativePath(currentPath, targetPath);
+    }
+
+    if (trimmed.includes('/kr/') || trimmed.includes('/en/')) {
+        const targetPath = normalizeToSitePath(trimmed);
+        return buildRelativePath(currentPath, targetPath);
+    }
+
+    return trimmed;
 }
 
 function normalizeInjectedSiteUrls($container) {
-    $container.find('a[href^="/"], img[src^="/"], source[src^="/"]').each(function () {
+    $container.find('a[href], img[src], source[src]').each(function () {
+        const $el = $(this);
+        const attr = this.tagName === 'IMG' || this.tagName === 'SOURCE' ? 'src' : 'href';
+        const value = $el.attr(attr);
+        if (!value) return;
+
+        const normalized = normalizeSitePathValue(value);
+        if (normalized !== value) $el.attr(attr, normalized);
+    });
+}
+
+function normalizeDocumentLinks() {
+    $('a[href], img[src], source[src]').each(function () {
         const $el = $(this);
         const attr = this.tagName === 'IMG' || this.tagName === 'SOURCE' ? 'src' : 'href';
         const value = $el.attr(attr);
@@ -160,9 +196,40 @@ function normalizeLogoPaths() {
     $('#header-container .logo img').attr('src', logoPath);
     $('#footer-container .logo img').attr('src', footerLogoPath);
 
-    const currentUrl = new URL(window.location.href);
-    const homeHref = new URL(/\/(kr|en)\/pages\//i.test(currentPath) ? '../index.html' : 'index.html', currentUrl.href).href;
+    const langMatch = currentPath.match(/\/(en|kr)(?=\/|$)/i);
+    const lang = (langMatch && langMatch[1].toLowerCase()) || 'kr';
+    const siteRoot = getSiteRootPath();
+    const homeTarget = `${siteRoot || ''}/${lang}/index.html`;
+    const homeHref = buildRelativePath(currentPath, homeTarget);
     $('#header-container .logo, #footer-container .logo').attr('href', homeHref);
+}
+
+function resolvePageHref(pageKey) {
+    const currentPath = (window.location.pathname || '').replace(/\\/g, '/');
+    const pageKeyNormalized = (pageKey || '').trim();
+    if (!pageKeyNormalized) return '#';
+
+    const langMatch = currentPath.match(/\/(en|kr)(?=\/|$)/i);
+    const lang = (langMatch && langMatch[1].toLowerCase()) || 'kr';
+    const siteRoot = getSiteRootPath();
+    const cleanKey = pageKeyNormalized.replace(/^\.\/?/, '').replace(/^\/+/, '');
+    const safeKey = cleanKey.toLowerCase().endsWith('.html') ? cleanKey : `${cleanKey}.html`;
+
+    const target = /index\.html?$/i.test(safeKey)
+        ? `${siteRoot || ''}/${lang}/index.html`
+        : `${siteRoot || ''}/${lang}/pages/${safeKey}`;
+
+    return buildRelativePath(currentPath, target);
+}
+
+function applyRuntimePageLinks() {
+    const $targets = $('header.header [data-page], footer [data-page], .subtop [data-page]');
+    $targets.each(function () {
+        const $link = $(this);
+        const pageKey = $link.attr('data-page');
+        if (!pageKey) return;
+        $link.attr('href', resolvePageHref(pageKey));
+    });
 }
 
 async function loadComponents() {
@@ -198,6 +265,7 @@ async function loadComponents() {
             normalizeInjectedSiteUrls($cta);
         }
 
+        applyRuntimePageLinks();
         normalizeLogoPaths();
         setHeaderActive();
 
@@ -874,6 +942,7 @@ $(async function () {
         const engine = scroller?.__isSmooth ? 'smooth' : 'native';
         $(document).trigger('scrollengine:ready', { engine });
     }
+    normalizeDocumentLinks();
     initHeader(scroller);
     initHeaderLnb();
     initHeaderMobileMenu();
